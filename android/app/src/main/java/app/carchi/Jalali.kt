@@ -1,4 +1,4 @@
-package app.carcare
+package app.carchi
 
 import java.text.NumberFormat
 import java.time.Instant
@@ -16,7 +16,13 @@ fun String.persianDigits(): String = buildString {
     for (ch in this@persianDigits) append(if (ch in '0'..'9') FA_DIGITS[ch - '0'] else ch)
 }
 
-fun Int.fa(): String = NumberFormat.getIntegerInstance(Locale.US).format(this).persianDigits()
+fun Int.fa(): String =
+    NumberFormat.getIntegerInstance(Locale.US).format(this)
+        .replace(",", "٬")
+        .persianDigits()
+
+/** برای سال: بدون جداکننده هزارگان */
+fun Int.faYear(): String = toString().persianDigits()
 
 fun Long.fa(): String = this.toInt().fa()
 
@@ -37,7 +43,7 @@ fun parseNumber(text: String): Int? {
 }
 
 data class JalaliDate(val year: Int, val month: Int, val day: Int) {
-    fun fa(): String = "${day.fa()} ${JALALI_MONTHS[month - 1]} ${year.fa()}"
+    fun fa(): String = "${day.fa()} ${JALALI_MONTHS[month - 1]} ${year.faYear()}"
 }
 
 fun localDate(ms: Long): LocalDate =

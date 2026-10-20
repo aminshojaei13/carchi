@@ -1,4 +1,4 @@
-package app.carcare
+package app.carchi
 
 import android.content.Context
 import kotlinx.serialization.Serializable

@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package app.carcare
+package app.carchi
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,6 +34,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,6 +48,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -78,6 +80,17 @@ private sealed interface Sheet {
     data class Done(val id: String) : Sheet
     data class Fix(val id: String) : Sheet
 }
+
+@Composable
+private fun fieldColors() = OutlinedTextFieldDefaults.colors(
+    focusedBorderColor = Brand,
+    unfocusedBorderColor = Color(0xFFD5D8DE),
+    focusedContainerColor = Color.White,
+    unfocusedContainerColor = Color.White,
+    focusedLabelColor = Brand,
+    unfocusedLabelColor = Muted,
+    cursorColor = Brand,
+)
 
 @Composable
 fun CarCareTheme(content: @Composable () -> Unit) {
@@ -217,6 +230,7 @@ private fun Onboarding(catalog: Catalog, onDone: (Car) -> Unit) {
         Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .clipToBounds()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
     ) {
@@ -248,6 +262,7 @@ private fun Onboarding(catalog: Catalog, onDone: (Car) -> Unit) {
             value = year,
             onValueChange = { year = it.filter { c -> c.isDigit() || c in "۰۱۲۳۴۵۶۷۸۹" }.take(4) },
             label = { Text("سال ساخت") },
+            colors = fieldColors(),
             placeholder = { Text("مثلاً ۱۳۹۸") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -259,6 +274,7 @@ private fun Onboarding(catalog: Catalog, onDone: (Car) -> Unit) {
             value = km,
             onValueChange = { km = it.filter { c -> c.isDigit() || c in "۰۱۲۳۴۵۶۷۸۹" } },
             label = { Text("کیلومتر فعلی") },
+            colors = fieldColors(),
             placeholder = { Text("مثلاً ۱۲۰۰۰۰") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -377,6 +393,7 @@ private fun Dashboard(
         Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .clipToBounds()
             .verticalScroll(rememberScrollState())
             .navigationBarsPadding()
             .padding(16.dp),
@@ -389,7 +406,7 @@ private fun Dashboard(
             Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(
-                        "${model?.brand ?: ""} ${model?.name ?: ""} · ${car.year.fa()}",
+                        "${model?.brand ?: ""} ${model?.name ?: ""} · ${car.year.faYear()}",
                         fontSize = 13.sp,
                         color = Color(0xFFBFDBFE),
                     )
@@ -454,7 +471,11 @@ private fun Dashboard(
 
             Spacer(Modifier.height(12.dp))
 
-            Card(shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth()) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                shape = RoundedCornerShape(18.dp),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
                 Column {
                     rows.forEachIndexed { index, row ->
                         PartRow(row) { onSheet(Sheet.Part(row.part.id)) }
@@ -543,7 +564,11 @@ private fun Chip(text: String) {
 @Composable
 private fun History(state: AppState, catalog: Catalog) {
     val events = remember(state) { state.events.reversed() }
-    Card(shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth()) {
+    Card(
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                shape = RoundedCornerShape(18.dp),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
         if (events.isEmpty()) {
             Text(
                 "هنوز چیزی ثبت نشده",
@@ -609,6 +634,7 @@ private fun KmSheet(currentKm: Int, onSave: (Int) -> Unit) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             textStyle = MaterialTheme.typography.headlineMedium.copy(textAlign = TextAlign.Center),
+            colors = fieldColors(),
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(14.dp),
         )
@@ -714,6 +740,7 @@ private fun DoneSheet(currentKm: Int, onSave: (Int, Int) -> Unit) {
             value = km,
             onValueChange = { km = it },
             label = { Text("کیلومتر") },
+            colors = fieldColors(),
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth(),
@@ -724,6 +751,7 @@ private fun DoneSheet(currentKm: Int, onSave: (Int, Int) -> Unit) {
             value = cost,
             onValueChange = { cost = it },
             label = { Text("هزینه (اختیاری)") },
+            colors = fieldColors(),
             placeholder = { Text("تومان") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -766,6 +794,7 @@ private fun FixSheet(baseKm: Int, onSave: (Int) -> Unit) {
             value = km,
             onValueChange = { km = it },
             label = { Text("کیلومتر آخرین سرویس") },
+            colors = fieldColors(),
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth(),

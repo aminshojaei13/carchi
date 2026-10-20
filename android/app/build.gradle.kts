@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "app.carcare"
+    namespace = "app.carchi"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "app.carcare"
+        applicationId = "app.carchi"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

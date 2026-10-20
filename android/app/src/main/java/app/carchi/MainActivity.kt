@@ -1,4 +1,4 @@
-package app.carcare
+package app.carchi
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
