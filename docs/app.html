@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>ماشین من</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#fff; --ink:#0f172a; --muted:#6b7280;
+    --line:#e5e7eb; --brand:#2563eb;
+    --ok:#059669; --near:#d97706; --over:#dc2626; --none:#9ca3af;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Vazirmatn,"IRANSans",Tahoma,sans-serif;
+    background:var(--bg); color:var(--ink);
+    font-size:15px; line-height:1.7;
+  }
+  .wrap{max-width:460px;margin:0 auto;padding:16px 16px 100px}
+  .card{background:var(--card);border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+  h1{font-size:20px;margin:0 0 4px}
+  h2{font-size:15px;margin:0 0 12px;font-weight:600}
+  .muted{color:var(--muted);font-size:13px}
+  .big{font-size:34px;font-weight:700;letter-spacing:-.5px}
+  .num{font-variant-numeric:tabular-nums}
+  button{font-family:inherit;font-size:15px;border:0;border-radius:14px;padding:14px 18px;cursor:pointer;transition:opacity .15s}
+  button:active{opacity:.75}
+  .btn-main{background:var(--brand);color:#fff;font-weight:600;width:100%}
+  .btn-ghost{background:#eef2ff;color:var(--brand);font-weight:600}
+  .btn-quiet{background:transparent;color:var(--muted);font-size:13px;padding:8px 12px}
+  select,input{font-family:inherit;font-size:16px;width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+  label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
+  .row{display:flex;align-items:center;gap:12px}
+  .spacer{flex:1}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .part{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer}
+  .part:last-child{border-bottom:0}
+  .part-name{font-weight:600;font-size:14.5px}
+  .part-meta{font-size:12.5px;color:var(--muted)}
+  .chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:#f1f5f9;color:#475569;margin-inline-start:6px;vertical-align:1px}
+  .banner{padding:16px;border-radius:18px;margin-bottom:12px;color:#fff}
+  .banner b{display:block;font-size:16px;margin-bottom:2px}
+  .banner span{font-size:13px;opacity:.9}
+  .tabs{display:flex;gap:8px;margin-bottom:12px}
+  .tab{flex:1;text-align:center;padding:10px;border-radius:12px;background:#e9ebef;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer}
+  .tab.on{background:#fff;color:var(--ink)}
+  .sheet-bg{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:flex-end;z-index:20}
+  .sheet-bg.on{display:flex}
+  .sheet{background:#fff;width:100%;max-width:460px;margin:0 auto;border-radius:22px 22px 0 0;padding:20px 18px 28px;max-height:88vh;overflow:auto}
+  .bar{width:38px;height:4px;background:#d1d5db;border-radius:2px;margin:0 auto 16px}
+  .footnote{font-size:11.5px;color:#9ca3af;margin-top:18px;text-align:center;line-height:1.9}
+  .empty{text-align:center;color:var(--muted);padding:30px 10px}
+  .ok-text{color:var(--ok)}
+  .hero{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff}
+  .hero .muted{color:rgba(255,255,255,.75)}
+  .hero .big{color:#fff}
+  .inline-edit{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
+
+<script>
+/* ---------- داده‌ها: همه تخمینی ---------- */
+const PARTS = [
+  {id:'oil',      name:'روغن موتور',      km:8000,  mo:6,  hint:'سینتتیک تا ۱۲٬۰۰۰'},
+  {id:'oilfilter',name:'فیلتر روغن',      km:8000,  mo:6},
+  {id:'airfilter',name:'فیلتر هوا',       km:15000, mo:12},
+  {id:'cabin',    name:'فیلتر کابین',     km:15000, mo:12},
+  {id:'plug',     name:'شمع',             km:30000, mo:36, hint:'ایریدیوم تا ۱۰۰٬۰۰۰'},
+  {id:'timing',   name:'تسمه تایم',       km:70000, mo:60, safety:true, beltOnly:true},
+  {id:'serp',     name:'تسمه دینام',      km:50000, mo:48},
+  {id:'brakeF',   name:'لنت جلو',         km:40000, mo:24, safety:true},
+  {id:'brakeR',   name:'لنت عقب',         km:60000, mo:36, safety:true},
+  {id:'gearbox',  name:'روغن گیربکس',     km:60000, mo:48},
+  {id:'coolant',  name:'مایع خنک‌کننده',  km:60000, mo:48},
+  {id:'tire',     name:'لاستیک',          km:50000, mo:60, safety:true},
+  {id:'battery',  name:'باتری',           km:0,     mo:36}
+];
+
+const MODELS = [
+  {id:'pride131', brand:'پراید', name:'۱۳۱', chain:false},
+  {id:'pride111', brand:'پراید', name:'۱۱۱', chain:false},
+  {id:'pride132', brand:'پراید', name:'۱۳۲', chain:false},
+  {id:'tiba',     brand:'تیبا', name:'صندوقدار', chain:false},
+  {id:'tibah',    brand:'تیبا', name:'هاچبک', chain:false},
+  {id:'saina',    brand:'ساینا', name:'S', chain:false},
+  {id:'quick',    brand:'کوییک', name:'R', chain:false},
+  {id:'quickS',   brand:'کوییک', name:'S', chain:false},
+  {id:'p206t2',   brand:'پژو', name:'۲۰۶ تیپ ۲', chain:false},
+  {id:'p206t5',   brand:'پژو', name:'۲۰۶ تیپ ۵', chain:false},
+  {id:'p405',     brand:'پژو', name:'۴۰۵', chain:false},
+  {id:'pars',     brand:'پژو', name:'پارس', chain:false},
+  {id:'p2008',    brand:'پژو', name:'۲۰۰۸', chain:true},
+  {id:'samand',   brand:'سمند', name:'LX', chain:false},
+  {id:'samandEF', brand:'سمند', name:'EF7', chain:true},
+  {id:'dena',     brand:'دنا', name:'پلاس', chain:true},
+  {id:'rana',     brand:'رانا', name:'پلاس', chain:true},
+  {id:'shahin',   brand:'شاهین', name:'G', chain:true},
+  {id:'tara',     brand:'تارا', name:'اتوماتیک', chain:true},
+  {id:'haimaS5',  brand:'هایما', name:'S5', chain:true},
+  {id:'tiggo7',   brand:'چری', name:'تیگو ۷', chain:true},
+  {id:'arrizo5',  brand:'چری', name:'آریزو ۵', chain:true},
+  {id:'mvm315',   brand:'ام‌وی‌ام', name:'۳۱۵', chain:false}
+];
+
+const KEY = 'carcare.v1';
+const DAY = 86400000;
+const nf = new Intl.NumberFormat('fa-IR');
+const nfPlain = new Intl.NumberFormat('fa-IR', {useGrouping:false});
+const df = new Intl.DateTimeFormat('fa-IR', {year:'numeric', month:'long', day:'numeric'});
+
+let S = load();
+let tab = 'car';
+
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } }
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+function fa(n){ return nf.format(Math.round(n)); }
+function today(){ const d=new Date(); return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+function toEn(s){
+  const fa='۰۱۲۳۴۵۶۷۸۹', ar='٠١٢٣٤٥٦٧٨٩';
+  return String(s).replace(/[۰-۹]/g,c=>fa.indexOf(c)).replace(/[٠-٩]/g,c=>ar.indexOf(c)).replace(/[^\d]/g,'');
+}
+function addMonths(d, m){ const x=new Date(d); x.setMonth(x.getMonth()+m); return x; }
+function model(id){ return MODELS.find(m=>m.id===id); }
+function fmtDate(iso){ return df.format(new Date(iso)); }
+
+function partsFor(){ return PARTS.filter(p => !(p.beltOnly && model(S.car.modelId).chain)); }
+
+/* ---------- محاسبه ---------- */
+function state(p){
+  const s = S.services[p.id];
+  const base = s || {km:S.car.km, date:S.car.startedAt};
+  const dueKm = p.km ? base.km + p.km : null;
+  const dueAt = addMonths(new Date(base.date), p.mo);
+  const remKm = dueKm!=null ? dueKm - S.car.km : null;
+  const remDays = Math.round((dueAt - today())/DAY);
+  const over = (remKm!=null && remKm<=0) || remDays<=0;
+  const near = !over && ((remKm!=null && remKm<=1000) || remDays<=30);
+  const used = p.km ? Math.min(1,(S.car.km-base.km)/p.km) : Math.min(1, (365 - Math.max(remDays,0)/DAY*365)/365);
+  return {dueKm, dueAt, remKm, remDays, over, near, state: over?'over':near?'near':'ok', base};
+}
+
+function sortedParts(){
+  const rank = {over:0, near:1, ok:2};
+  return partsFor().map(p=>({p, s:state(p)})).sort((a,b)=> rank[a.s.state]-rank[b.s.state] || (a.s.remKm??1e9)-(b.s.remKm??1e9));
+}
+
+/* ---------- رندر ---------- */
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = !S || !S.car ? onboarding() : main();
+  bind();
+}
+
+function onboarding(){
+  const brands = [...new Set(MODELS.map(m=>m.brand))];
+  return `
+  <div class="card">
+    <h1>ماشینت را ثبت کن</h1>
+    <div class="muted">۳ فیلد. کمتر از یک دقیقه.</div>
+  </div>
+  <div class="card">
+    <label>برند</label>
+    <select id="brand"><option value="">انتخاب کن</option>${brands.map(b=>`<option>${b}</option>`).join('')}</select>
+    <label>مدل</label>
+    <select id="mdl" disabled><option value="">اول برند</option></select>
+    <label>سال ساخت</label>
+    <input id="year" inputmode="numeric" placeholder="مثلاً ۱۳۹۸">
+    <label>کیلومتر فعلی</label>
+    <input id="km" inputmode="numeric" placeholder="مثلاً ۱۲۰۰۰۰">
+    <div style="height:16px"></div>
+    <button class="btn-main" id="start">شروع</button>
+  </div>
+  <div class="footnote">بازه‌های تعویض در این نسخه <b>تخمینی</b> هستند و مبنای رسمی ندارند.<br>قبل از تصمیم واقعی، با دفترچه خودرو یا مکانیک تطبیق بده.</div>`;
+}
+
+function main(){
+  const m = model(S.car.modelId);
+  const list = sortedParts();
+  const over = list.filter(x=>x.s.over).length;
+  const near = list.filter(x=>x.s.near).length;
+  const next = list.find(x=>x.s.over) || list.find(x=>x.s.near) || list[0];
+
+  const bannerColor = over ? 'var(--over)' : near ? 'var(--near)' : 'var(--ok)';
+  const head = over ? `${fa(over)} قطعه از موعد گذشته`
+             : near ? `${fa(near)} قطعه نزدیک موعد`
+             : 'همه‌چیز مرتب است';
+
+  return `
+  <div class="card hero">
+    <div class="row">
+      <div>
+        <div class="muted">${m.brand} ${m.name} · ${nfPlain.format(S.car.year)}</div>
+        <div class="big num">${fa(S.car.km)}</div>
+        <div class="muted">کیلومتر</div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn-ghost" id="updKm">ثبت کیلومتر</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab ${tab==='car'?'on':''}" data-tab="car">وضعیت</div>
+    <div class="tab ${tab==='hist'?'on':''}" data-tab="hist">تاریخچه</div>
+  </div>
+
+  ${tab==='car' ? carTab(list, over, near, next) : histTab()}
+
+  <div class="footnote">
+    بازه‌ها تخمینی‌اند، نه منبع رسمی.<br>
+    برای قطعات ایمنی (ترمز، تسمه، لاستیک) با مکانیک چک کن.
+    <br><br>
+    <button class="btn-quiet" id="reset">حذف خودرو و شروع دوباره</button>
+  </div>`;
+}
+
+function carTab(list, over, near, next){
+  if(!list.length) return '<div class="card empty">قطعه‌ای تعریف نشده</div>';
+  return `
+  <div class="banner" style="background:${over?'var(--over)':near?'var(--near)':'var(--ok)'}">
+    <b>${over?`${fa(over)} قطعه از موعد گذشته`:near?`${fa(near)} قطعه نزدیک موعد`:'همه‌چیز مرتب است'}</b>
+    <span>${next ? `${next.p.name}: ${remainingText(next.s)}` : ''}</span>
+  </div>
+  <div class="card">
+    ${list.map(({p,s})=>partRow(p,s)).join('')}
+  </div>`;
+}
+
+function partRow(p,s){
+  const color = s.state==='over'?'var(--over)':s.state==='near'?'var(--near)':'var(--ok)';
+  return `
+  <div class="part" data-part="${p.id}">
+    <span class="dot" style="background:${color}"></span>
+    <div>
+      <div class="part-name">${p.name}${p.safety?'<span class="chip">ایمنی</span>':''}<span class="chip">تخمینی</span></div>
+      <div class="part-meta num">${remainingText(s)}</div>
+    </div>
+    <div class="spacer"></div>
+    <div style="color:${color};font-size:20px">›</div>
+  </div>`;
+}
+
+function remainingText(s){
+  if(s.remKm!=null && s.remKm>0 && s.remDays>0) return `${fa(s.remKm)} کیلومتر یا ${fa(s.remDays)} روز مانده`;
+  if(s.remKm!=null && s.remKm<=0 && s.remDays>0) return `${fa(-s.remKm)} کیلومتر گذشته`;
+  if(s.remDays<=0) return `${fa(-s.remDays)} روز گذشته`;
+  return `${fa(s.remKm)} کیلومتر مانده`;
+}
+
+function histTab(){
+  const ev = (S.events||[]).slice().reverse();
+  if(!ev.length) return '<div class="card empty">هنوز چیزی ثبت نشده</div>';
+  return `<div class="card">${ev.map(e=>{
+    const p = PARTS.find(x=>x.id===e.partId);
+    return `<div class="part">
+      <span class="dot" style="background:var(--brand)"></span>
+      <div>
+        <div class="part-name">${p ? p.name : e.partId}${e.type==='baseline'?'<span class="chip">فرض اول</span>':''}</div>
+        <div class="part-meta num">${fa(e.km)} کیلومتر · ${fmtDate(e.date)}${e.cost?` · ${fa(e.cost)} تومان`:''}</div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* ---------- تعامل ---------- */
+function bind(){
+  const brand = document.getElementById('brand');
+  if(brand){
+    brand.onchange = () => {
+      const md = document.getElementById('mdl');
+      const opts = MODELS.filter(m=>m.brand===brand.value);
+      md.disabled = !opts.length;
+      md.innerHTML = opts.length ? opts.map(m=>`<option value="${m.id}">${m.name}</option>`).join('') : '<option value="">—</option>';
+    };
+    document.getElementById('start').onclick = startCar;
+    return;
+  }
+
+  document.querySelectorAll('[data-tab]').forEach(el => el.onclick = () => { tab = el.dataset.tab; render(); });
+  const upd = document.getElementById('updKm'); if(upd) upd.onclick = sheetKm;
+  const rst = document.getElementById('reset'); if(rst) rst.onclick = () => { if(confirm('همه اطلاعات پاک شود؟')){ S=null; localStorage.removeItem(KEY); render(); } };
+  document.querySelectorAll('[data-part]').forEach(el => el.onclick = () => sheetPart(el.dataset.part));
+}
+
+function startCar(){
+  const mdl = document.getElementById('mdl').value;
+  const year = toEn(document.getElementById('year').value);
+  const km = toEn(document.getElementById('km').value);
+  if(!mdl || !year || !km) return alert('هر سه فیلد لازم است');
+  const now = new Date().toISOString();
+  S = { v:1, car:{modelId:mdl, year:+year, km:+km, startedAt:now}, services:{}, events:[] };
+  partsFor().forEach(p => {
+    S.services[p.id] = { km:+km, date:now };
+    S.events.push({partId:p.id, km:+km, date:now, type:'baseline'});
+  });
+  save(); render();
+}
+
+function sheetKm(){
+  openSheet(`
+    <div class="bar"></div>
+    <h2>کیلومتر فعلی</h2>
+    <input id="k" inputmode="numeric" class="num" value="${S.car.km}" style="font-size:28px;text-align:center">
+    <div style="height:14px"></div>
+    <button class="btn-ghost" id="plus1000" style="width:100%">+ ۱٬۰۰۰</button>
+    <div style="height:10px"></div>
+    <button class="btn-main" id="kSave">ثبت</button>
+  `);
+  document.getElementById('plus1000').onclick = () => {
+    const el = document.getElementById('k');
+    el.value = (+toEn(el.value)||0) + 1000;
+  };
+  document.getElementById('kSave').onclick = () => {
+    const v = +toEn(document.getElementById('k').value);
+    if(!v || v < S.car.km) return alert('کیلومتر نمی‌تواند از قبلی کمتر باشد');
+    S.car.km = v; save(); closeSheet(); render();
+  };
+}
+
+function sheetPart(id){
+  const p = PARTS.find(x=>x.id===id);
+  const s = state(p);
+  openSheet(`
+    <div class="bar"></div>
+    <h2>${p.name}</h2>
+    <div class="inline-edit">
+      آخرین سرویس: <b class="num">${fa(s.base.km)} کیلومتر</b> · ${fmtDate(s.base.date)}<br>
+      موعد بعدی: <b class="num">${s.dueKm?fa(s.dueKm)+' کیلومتر':'—'}</b> · ${df.format(s.dueAt)}<br>
+      وضعیت: <b>${remainingText(s)}</b>
+      ${p.hint?`<br><span class="muted">${p.hint}</span>`:''}
+    </div>
+    <div style="height:16px"></div>
+    <button class="btn-main" id="done">انجام شد</button>
+    <div style="height:8px"></div>
+    <button class="btn-ghost" id="fix" style="width:100%">آخرین سرویس را اصلاح کن</button>
+  `);
+  document.getElementById('done').onclick = () => sheetDone(p);
+  document.getElementById('fix').onclick = () => sheetFix(p);
+}
+
+function sheetDone(p){
+  openSheet(`
+    <div class="bar"></div>
+    <h2>${p.name} — انجام شد</h2>
+    <label>کیلومتر</label>
+    <input id="dkm" inputmode="numeric" value="${S.car.km}">
+    <label>هزینه (اختیاری)</label>
+    <input id="dcost" inputmode="numeric" placeholder="تومان">
+    <div style="height:16px"></div>
+    <button class="btn-main" id="dSave">ثبت</button>
+  `);
+  document.getElementById('dSave').onclick = () => {
+    const km = +toEn(document.getElementById('dkm').value);
+    const cost = +toEn(document.getElementById('dcost').value);
+    if(!km) return alert('کیلومتر لازم است');
+    const now = new Date().toISOString();
+    S.services[p.id] = { km, date:now };
+    S.events.push({partId:p.id, km, date:now, cost:cost||0, type:'done'});
+    if(km > S.car.km) S.car.km = km;
+    save(); closeSheet(); render();
+  };
+}
+
+function sheetFix(p){
+  const s = state(p);
+  openSheet(`
+    <div class="bar"></div>
+    <h2>${p.name} — اصلاح</h2>
+    <label>کیلومتر آخرین سرویس</label>
+    <input id="fkm" inputmode="numeric" value="${s.base.km}">
+    <div class="muted" style="margin-top:10px">تاریخ، امروز ثبت می‌شود.</div>
+    <div style="height:16px"></div>
+    <button class="btn-main" id="fSave">ثبت</button>
+  `);
+  document.getElementById('fSave').onclick = () => {
+    const km = +toEn(document.getElementById('fkm').value);
+    if(!km) return alert('کیلومتر لازم است');
+    S.services[p.id] = { km, date:new Date().toISOString() };
+    S.events.push({partId:p.id, km, date:new Date().toISOString(), type:'fix'});
+    save(); closeSheet(); render();
+  };
+}
+
+function openSheet(html){
+  document.getElementById('sheet').innerHTML = html;
+  document.getElementById('sheetBg').classList.add('on');
+}
+function closeSheet(){ document.getElementById('sheetBg').classList.remove('on'); }
+document.getElementById('sheetBg').onclick = e => { if(e.target.id==='sheetBg') closeSheet(); };
+
+render();
+</script>
+</body>
+</html>

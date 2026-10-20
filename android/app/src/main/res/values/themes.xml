@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.CarCare" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#F4F5F7</item>
+        <item name="android:statusBarColor">#F4F5F7</item>
+        <item name="android:navigationBarColor">#F4F5F7</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

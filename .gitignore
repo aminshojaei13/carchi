@@ -1,0 +1,21 @@
+# Gradle
+.gradle/
+build/
+local.properties
+
+# Android
+*.apk
+*.aab
+*.iml
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# macOS
+.DS_Store
+
+# Keys
+*.jks
+*.keystore
+keystore.properties

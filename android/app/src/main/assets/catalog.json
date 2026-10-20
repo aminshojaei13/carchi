@@ -1,0 +1,42 @@
+{
+  "models": [
+    { "id": "pride131", "brand": "پراید", "name": "۱۳۱", "chain": false },
+    { "id": "pride111", "brand": "پراید", "name": "۱۱۱", "chain": false },
+    { "id": "pride132", "brand": "پراید", "name": "۱۳۲", "chain": false },
+    { "id": "tiba", "brand": "تیبا", "name": "صندوقدار", "chain": false },
+    { "id": "tibah", "brand": "تیبا", "name": "هاچبک", "chain": false },
+    { "id": "saina", "brand": "ساینا", "name": "S", "chain": false },
+    { "id": "quickR", "brand": "کوییک", "name": "R", "chain": false },
+    { "id": "quickS", "brand": "کوییک", "name": "S", "chain": false },
+    { "id": "p206t2", "brand": "پژو", "name": "۲۰۶ تیپ ۲", "chain": false },
+    { "id": "p206t5", "brand": "پژو", "name": "۲۰۶ تیپ ۵", "chain": false },
+    { "id": "p405", "brand": "پژو", "name": "۴۰۵", "chain": false },
+    { "id": "pars", "brand": "پژو", "name": "پارس", "chain": false },
+    { "id": "p2008", "brand": "پژو", "name": "۲۰۰۸", "chain": true },
+    { "id": "samandLX", "brand": "سمند", "name": "LX", "chain": false },
+    { "id": "samandEF", "brand": "سمند", "name": "EF7", "chain": true },
+    { "id": "dena", "brand": "دنا", "name": "پلاس", "chain": true },
+    { "id": "rana", "brand": "رانا", "name": "پلاس", "chain": true },
+    { "id": "shahin", "brand": "شاهین", "name": "G", "chain": true },
+    { "id": "tara", "brand": "تارا", "name": "اتوماتیک", "chain": true },
+    { "id": "haimaS5", "brand": "هایما", "name": "S5", "chain": true },
+    { "id": "tiggo7", "brand": "چری", "name": "تیگو ۷", "chain": true },
+    { "id": "arrizo5", "brand": "چری", "name": "آریزو ۵", "chain": true },
+    { "id": "mvm315", "brand": "ام‌وی‌ام", "name": "۳۱۵", "chain": false }
+  ],
+  "parts": [
+    { "id": "oil", "name": "روغن موتور", "km": 8000, "months": 6, "hint": "سینتتیک تا ۱۲٬۰۰۰", "safety": false },
+    { "id": "oilfilter", "name": "فیلتر روغن", "km": 8000, "months": 6, "safety": false },
+    { "id": "airfilter", "name": "فیلتر هوا", "km": 15000, "months": 12, "safety": false },
+    { "id": "cabin", "name": "فیلتر کابین", "km": 15000, "months": 12, "safety": false },
+    { "id": "plug", "name": "شمع", "km": 30000, "months": 36, "hint": "ایریدیوم تا ۱۰۰٬۰۰۰", "safety": false },
+    { "id": "timing", "name": "تسمه تایم", "km": 70000, "months": 60, "safety": true, "beltOnly": true },
+    { "id": "serp", "name": "تسمه دینام", "km": 50000, "months": 48, "safety": false },
+    { "id": "brakeF", "name": "لنت جلو", "km": 40000, "months": 24, "safety": true },
+    { "id": "brakeR", "name": "لنت عقب", "km": 60000, "months": 36, "safety": true },
+    { "id": "gearbox", "name": "روغن گیربکس", "km": 60000, "months": 48, "safety": false },
+    { "id": "coolant", "name": "مایع خنک‌کننده", "km": 60000, "months": 48, "safety": false },
+    { "id": "tire", "name": "لاستیک", "km": 50000, "months": 60, "safety": true },
+    { "id": "battery", "name": "باتری", "km": 0, "months": 36, "safety": false }
+  ]
+}
