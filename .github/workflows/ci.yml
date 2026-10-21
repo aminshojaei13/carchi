@@ -57,7 +57,7 @@ jobs:
         run: ./gradlew assembleRelease --stacktrace
 
       - name: Upload APKs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: carchi-apks
           path: |
@@ -68,7 +68,7 @@ jobs:
 
       - name: Upload reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: carchi-reports
           path: |
