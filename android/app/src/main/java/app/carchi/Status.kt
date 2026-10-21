@@ -14,6 +14,7 @@ data class Row(
     val baseMs: Long,
     val dueKm: Int?,
     val dueMs: Long,
+    val overridden: Boolean = false,
 )
 
 private const val DAY_MS = 86_400_000L
@@ -23,7 +24,7 @@ fun rowsFor(state: AppState, catalog: Catalog): List<Row> {
     val chain = catalog.model(car.modelId)?.chain == true
     val now = System.currentTimeMillis()
 
-    return catalog.parts
+    return catalog.effectiveParts(car.modelId, state.overrides)
         .filter { !(it.beltOnly && chain) }
         .map { part ->
             val service = state.services[part.id]
@@ -48,6 +49,7 @@ fun rowsFor(state: AppState, catalog: Catalog): List<Row> {
                 baseMs = baseMs,
                 dueKm = if (part.km > 0) baseKm + part.km else null,
                 dueMs = dueMs,
+                overridden = state.overrides.containsKey(Catalog.key(car.modelId, part.id)),
             )
         }
         .sortedWith(compareBy<Row>({ it.level.ordinal }, { it.remKm ?: Int.MAX_VALUE }))
@@ -58,5 +60,14 @@ fun Row.remainingText(): String = when {
     remKm != null && remKm <= 0 && remDays > 0 -> "${(-remKm).fa()} کیلومتر گذشته"
     remDays <= 0 -> "${(-remDays).fa()} روز گذشته"
     remKm != null -> "${remKm.fa()} کیلومتر مانده"
+    remDays > 0 -> "${remDays.fa()} روز مانده"
     else -> "—"
+}
+
+/** متن کوتاه برای اعلان. */
+fun Row.shortText(): String = when {
+    remKm != null && remKm <= 0 -> "${(-remKm).fa()} کیلومتر گذشته"
+    remDays <= 0 -> "${(-remDays).fa()} روز گذشته"
+    remKm != null -> "${remKm.fa()} کیلومتر مانده"
+    else -> "${remDays.fa()} روز مانده"
 }

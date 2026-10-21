@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+*.kt text
+*.kts text
+*.xml text
+*.json text
+*.md text
+*.py text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.apk binary
+*.aab binary
+*.jar binary
+*.keystore binary
+*.jks binary

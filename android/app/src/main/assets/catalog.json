@@ -1,42 +1,257 @@
 {
   "models": [
-    { "id": "pride131", "brand": "پراید", "name": "۱۳۱", "chain": false },
-    { "id": "pride111", "brand": "پراید", "name": "۱۱۱", "chain": false },
-    { "id": "pride132", "brand": "پراید", "name": "۱۳۲", "chain": false },
-    { "id": "tiba", "brand": "تیبا", "name": "صندوقدار", "chain": false },
-    { "id": "tibah", "brand": "تیبا", "name": "هاچبک", "chain": false },
-    { "id": "saina", "brand": "ساینا", "name": "S", "chain": false },
-    { "id": "quickR", "brand": "کوییک", "name": "R", "chain": false },
-    { "id": "quickS", "brand": "کوییک", "name": "S", "chain": false },
-    { "id": "p206t2", "brand": "پژو", "name": "۲۰۶ تیپ ۲", "chain": false },
-    { "id": "p206t5", "brand": "پژو", "name": "۲۰۶ تیپ ۵", "chain": false },
-    { "id": "p405", "brand": "پژو", "name": "۴۰۵", "chain": false },
-    { "id": "pars", "brand": "پژو", "name": "پارس", "chain": false },
-    { "id": "p2008", "brand": "پژو", "name": "۲۰۰۸", "chain": true },
-    { "id": "samandLX", "brand": "سمند", "name": "LX", "chain": false },
-    { "id": "samandEF", "brand": "سمند", "name": "EF7", "chain": true },
-    { "id": "dena", "brand": "دنا", "name": "پلاس", "chain": true },
-    { "id": "rana", "brand": "رانا", "name": "پلاس", "chain": true },
-    { "id": "shahin", "brand": "شاهین", "name": "G", "chain": true },
-    { "id": "tara", "brand": "تارا", "name": "اتوماتیک", "chain": true },
-    { "id": "haimaS5", "brand": "هایما", "name": "S5", "chain": true },
-    { "id": "tiggo7", "brand": "چری", "name": "تیگو ۷", "chain": true },
-    { "id": "arrizo5", "brand": "چری", "name": "آریزو ۵", "chain": true },
-    { "id": "mvm315", "brand": "ام‌وی‌ام", "name": "۳۱۵", "chain": false }
+    {
+      "id": "pride131",
+      "brand": "پراید",
+      "name": "۱۳۱",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/03fb3c2b-7b87-4a08-bb64-0ab322d0e39c/saipa-pride-X100-99-12-18.pdf"
+    },
+    {
+      "id": "pride111",
+      "brand": "پراید",
+      "name": "۱۱۱",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/03fb3c2b-7b87-4a08-bb64-0ab322d0e39c/saipa-pride-X100-99-12-18.pdf"
+    },
+    {
+      "id": "pride132",
+      "brand": "پراید",
+      "name": "۱۳۲",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/03fb3c2b-7b87-4a08-bb64-0ab322d0e39c/saipa-pride-X100-99-12-18.pdf"
+    },
+    {
+      "id": "tiba",
+      "brand": "تیبا",
+      "name": "صندوقدار",
+      "chain": false
+    },
+    {
+      "id": "tibah",
+      "brand": "تیبا",
+      "name": "هاچبک",
+      "chain": false
+    },
+    {
+      "id": "saina",
+      "brand": "ساینا",
+      "name": "S",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/205dd658-4075-403f-8259-5f7dbe4cd498/saipa-saina-S-G-CVT-CNG-1401-01.pdf"
+    },
+    {
+      "id": "quickR",
+      "brand": "کوییک",
+      "name": "R",
+      "chain": false
+    },
+    {
+      "id": "quickS",
+      "brand": "کوییک",
+      "name": "S",
+      "chain": false
+    },
+    {
+      "id": "p206t2",
+      "brand": "پژو",
+      "name": "۲۰۶ تیپ ۲",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/2a518702-9661-4bb5-9c6b-e55505bf1b93/peugeot-206-1400-8.pdf"
+    },
+    {
+      "id": "p206t5",
+      "brand": "پژو",
+      "name": "۲۰۶ تیپ ۵",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/2a518702-9661-4bb5-9c6b-e55505bf1b93/peugeot-206-1400-8.pdf"
+    },
+    {
+      "id": "p405",
+      "brand": "پژو",
+      "name": "۴۰۵",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/4e1fdd2a-ab9f-4ff7-a593-c3e826d12abc/peugeot-405-1400-1.pdf"
+    },
+    {
+      "id": "pars",
+      "brand": "پژو",
+      "name": "پارس",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/b24d402a-df44-44d3-b57c-03b6d5a6cc04/peugeot-pars-1400-12.pdf"
+    },
+    {
+      "id": "p2008",
+      "brand": "پژو",
+      "name": "۲۰۰۸",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/6FC57EEF-2541-4343-BF74-31FC5E77C914/peugeot-2008.pdf"
+    },
+    {
+      "id": "samandLX",
+      "brand": "سمند",
+      "name": "LX",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/edc77828-1267-4af6-8873-1a3cc94c4071/ikco-samand-lx-1400-6.pdf"
+    },
+    {
+      "id": "samandEF",
+      "brand": "سمند",
+      "name": "EF7",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/7AFD0E71-24D0-48A9-9F58-155A8E8FC99D/ikco-samand-se.pdf"
+    },
+    {
+      "id": "dena",
+      "brand": "دنا",
+      "name": "پلاس",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/0fd00fd0-e020-4c2f-9c28-451ea3bd42c5/ikco-dena-all-1400-10.pdf"
+    },
+    {
+      "id": "rana",
+      "brand": "رانا",
+      "name": "پلاس",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/2b0cbf76-3bbb-4e7b-8682-3b8156c2b602/ikco-runna-plus-1400-11.pdf"
+    },
+    {
+      "id": "shahin",
+      "brand": "شاهین",
+      "name": "G",
+      "chain": true
+    },
+    {
+      "id": "tara",
+      "brand": "تارا",
+      "name": "اتوماتیک",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/1f965e83-ed22-4e61-afc3-076060baaf7b/ikco-tara-1400-10.pdf"
+    },
+    {
+      "id": "haimaS5",
+      "brand": "هایما",
+      "name": "S5",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/33fd9c85-1630-4eb7-89da-8798d0c8e06e/haima-s5-1399-11.pdf"
+    },
+    {
+      "id": "tiggo7",
+      "brand": "چری",
+      "name": "تیگو ۷",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/B8C3061B-2D8B-4E94-96EC-494C627DD9C3/chery-tiggo7.pdf"
+    },
+    {
+      "id": "arrizo5",
+      "brand": "چری",
+      "name": "آریزو ۵",
+      "chain": true,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/E9D6F926-4D38-4FBA-A976-FA6CCF17392D/chery-arizzo5-turbo.pdf"
+    },
+    {
+      "id": "mvm315",
+      "brand": "ام‌وی‌ام",
+      "name": "۳۱۵",
+      "chain": false,
+      "manualUrl": "https://cdn-sth1.bama.ir/uploads/BamaImages/News/6FBDB0F0-1D4F-4A42-AC5D-C28BED62DFE6/mvm-315-new.pdf"
+    }
   ],
   "parts": [
-    { "id": "oil", "name": "روغن موتور", "km": 8000, "months": 6, "hint": "سینتتیک تا ۱۲٬۰۰۰", "safety": false },
-    { "id": "oilfilter", "name": "فیلتر روغن", "km": 8000, "months": 6, "safety": false },
-    { "id": "airfilter", "name": "فیلتر هوا", "km": 15000, "months": 12, "safety": false },
-    { "id": "cabin", "name": "فیلتر کابین", "km": 15000, "months": 12, "safety": false },
-    { "id": "plug", "name": "شمع", "km": 30000, "months": 36, "hint": "ایریدیوم تا ۱۰۰٬۰۰۰", "safety": false },
-    { "id": "timing", "name": "تسمه تایم", "km": 70000, "months": 60, "safety": true, "beltOnly": true },
-    { "id": "serp", "name": "تسمه دینام", "km": 50000, "months": 48, "safety": false },
-    { "id": "brakeF", "name": "لنت جلو", "km": 40000, "months": 24, "safety": true },
-    { "id": "brakeR", "name": "لنت عقب", "km": 60000, "months": 36, "safety": true },
-    { "id": "gearbox", "name": "روغن گیربکس", "km": 60000, "months": 48, "safety": false },
-    { "id": "coolant", "name": "مایع خنک‌کننده", "km": 60000, "months": 48, "safety": false },
-    { "id": "tire", "name": "لاستیک", "km": 50000, "months": 60, "safety": true },
-    { "id": "battery", "name": "باتری", "km": 0, "months": 36, "safety": false }
-  ]
+    {
+      "id": "oil",
+      "name": "روغن موتور",
+      "km": 8000,
+      "months": 6,
+      "hint": "سینتتیک تا ۱۲٬۰۰۰",
+      "safety": false
+    },
+    {
+      "id": "oilfilter",
+      "name": "فیلتر روغن",
+      "km": 8000,
+      "months": 6,
+      "safety": false
+    },
+    {
+      "id": "airfilter",
+      "name": "فیلتر هوا",
+      "km": 15000,
+      "months": 12,
+      "safety": false
+    },
+    {
+      "id": "cabin",
+      "name": "فیلتر کابین",
+      "km": 15000,
+      "months": 12,
+      "safety": false
+    },
+    {
+      "id": "plug",
+      "name": "شمع",
+      "km": 30000,
+      "months": 36,
+      "hint": "ایریدیوم تا ۱۰۰٬۰۰۰",
+      "safety": false
+    },
+    {
+      "id": "timing",
+      "name": "تسمه تایم",
+      "km": 70000,
+      "months": 60,
+      "safety": true,
+      "beltOnly": true
+    },
+    {
+      "id": "serp",
+      "name": "تسمه دینام",
+      "km": 50000,
+      "months": 48,
+      "safety": false
+    },
+    {
+      "id": "brakeF",
+      "name": "لنت جلو",
+      "km": 40000,
+      "months": 24,
+      "safety": true
+    },
+    {
+      "id": "brakeR",
+      "name": "لنت عقب",
+      "km": 60000,
+      "months": 36,
+      "safety": true
+    },
+    {
+      "id": "gearbox",
+      "name": "روغن گیربکس",
+      "km": 60000,
+      "months": 48,
+      "safety": false
+    },
+    {
+      "id": "coolant",
+      "name": "مایع خنک‌کننده",
+      "km": 60000,
+      "months": 48,
+      "safety": false
+    },
+    {
+      "id": "tire",
+      "name": "لاستیک",
+      "km": 50000,
+      "months": 60,
+      "safety": true
+    },
+    {
+      "id": "battery",
+      "name": "باتری",
+      "km": 0,
+      "months": 36,
+      "safety": false
+    }
+  ],
+  "version": 2
 }

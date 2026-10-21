@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +18,12 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
         )
         super.onCreate(savedInstanceState)
+        scheduleReminders(applicationContext, Store(applicationContext).load().reminders)
+        // فقط برای تست دستی روی دستگاه: adb ... --ez run_reminder_now true
+        if (intent?.getBooleanExtra("run_reminder_now", false) == true) {
+            WorkManager.getInstance(applicationContext)
+                .enqueue(OneTimeWorkRequestBuilder<ReminderWorker>().build())
+        }
         setContent { CarCareApp() }
     }
 }

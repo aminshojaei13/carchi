@@ -5,6 +5,10 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
+val releaseKeystore = System.getenv("CARCHI_KEYSTORE_PATH")
+    ?.let { path -> file(path) }
+    ?.takeIf { it.exists() }
+
 android {
     namespace = "app.carchi"
     compileSdk = 36
@@ -13,13 +17,27 @@ android {
         applicationId = "app.carchi"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 3
+        versionName = "0.3.0"
+    }
+
+    signingConfigs {
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = releaseKeystore
+                storePassword = System.getenv("CARCHI_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("CARCHI_KEY_ALIAS")
+                keyPassword = System.getenv("CARCHI_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            if (releaseKeystore != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
@@ -28,8 +46,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 
     buildFeatures {
@@ -38,12 +58,14 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.ui:ui:1.9.5")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.9.5")
-    implementation("androidx.compose.foundation:foundation:1.9.5")
+    implementation("androidx.compose.ui:ui:1.11.4")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.11.4")
+    implementation("androidx.compose.foundation:foundation:1.11.4")
     implementation("androidx.compose.material3:material3:1.4.0")
-    implementation("androidx.activity:activity-compose:1.9.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation("androidx.activity:activity-compose:1.13.0")
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.work:work-runtime-ktx:2.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
 
-    debugImplementation("androidx.compose.ui:ui-tooling:1.9.5")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.11.4")
 }
